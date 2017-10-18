@@ -146,7 +146,6 @@
     hasMajorDiagonalConflictAt: function( majorDiagonalColumnIndexAtFirstRow, rowIndex) {
       var sum = 0;
       var j = majorDiagonalColumnIndexAtFirstRow;
-      debugger;
 
       for (var i = rowIndex; i < this.rows().length; i++) {
         if (this.get(i)[j] === 1) {
@@ -155,7 +154,6 @@
         j += 1;
       }
       return sum > 1;
-      
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -168,9 +166,6 @@
         }
       }
       return false;
-
-      
-       
     },
 
 
