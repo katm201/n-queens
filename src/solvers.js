@@ -52,26 +52,31 @@ window.countNRooksSolutions = function(n) {
 
   var board = new Board({n: n});
 
-  var recurse = function(round) {
+  var coordinates = [];
 
-    //terminal condition
+  var recurse = function(round) {
+    debugger;
+    //terminating condition:
     if (round === n) {
       solutionCount++;
-      
-
+      let rewind = coordinates.pop();
+      board.togglePiece(rewind[0], rewind[1]);
     } else {
-    //recursive condition
+
+      round++;
+      
       for (var col = 0; col < n; col++) {
-        
-        board.togglePiece(round, col);
-        round++;
+        board.togglePiece(round - 1, col);
+        coordinates.push([round - 1, col]);
 
         if (!board.hasAnyRooksConflicts()) {
           recurse(round);
-        } else {
-
           round--;
-          board.togglePiece(round, col);
+        }
+        
+        if (coordinates.length > 0) {
+          let rewind = coordinates.pop();
+          board.togglePiece(rewind[0], rewind[1]);
         }
       }
     }
