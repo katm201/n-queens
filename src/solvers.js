@@ -19,8 +19,6 @@ window.findNRooksSolution = function(n) {
    
   var board = new Board({n: n});
 
-  var coordinates = [];
-
   var recurse = function(round) {
     //terminating condition:
     if (round === n) {
@@ -29,14 +27,12 @@ window.findNRooksSolution = function(n) {
       
       for (var col = 0; col < n; col++) {
         board.togglePiece(round, col);
-        coordinates.push([round, col]);
 
         if (!board.hasAnyColConflicts()) {
           return recurse(round + 1);
         }
         
-        let rewind = coordinates.pop();
-        board.togglePiece(rewind[0], rewind[1]);
+        board.togglePiece(round, col);
       }
     }
   };
@@ -54,9 +50,7 @@ window.countNRooksSolutions = function(n) {
 
   var board = new Board({n: n});
 
-  var coordinates = [];
-
-  var setColumns = [];
+  var usedCols = [];
 
   var recurse = function(round) {
     //terminating condition:
@@ -66,14 +60,12 @@ window.countNRooksSolutions = function(n) {
     } else {
       for (var col = 0; col < n; col++) {
         board.togglePiece(round, col);
-        coordinates.push([round, col]);
 
         if (!board.hasAnyColConflicts()) {
           recurse(round + 1);
         }
         
-        let rewind = coordinates.pop();
-        board.togglePiece(rewind[0], rewind[1]);
+        board.togglePiece(round, col);
       }
     }
   };
@@ -88,8 +80,6 @@ window.countNRooksSolutions = function(n) {
 window.findNQueensSolution = function(n) {
   var board = new Board({n: n});
 
-  var coordinates = [];
-
   var recurse = function(round) {
     //terminating condition:
     if (round === n) {
@@ -98,7 +88,6 @@ window.findNQueensSolution = function(n) {
       
       for (var col = 0; col < n; col++) {
         board.togglePiece(round, col);
-        coordinates.push([round, col]);
 
         if (!board.hasAnyColConflicts() && !board.hasAnyMajorDiagonalConflicts() && !board.hasAnyMinorDiagonalConflicts()) {
           var result = recurse(round + 1);
@@ -107,8 +96,7 @@ window.findNQueensSolution = function(n) {
           }
         }
         
-        let rewind = coordinates.pop();
-        board.togglePiece(rewind[0], rewind[1]);
+        board.togglePiece(round, col);
       }
     }
   };
@@ -125,8 +113,6 @@ window.countNQueensSolutions = function(n) {
 
   var board = new Board({n: n});
 
-  var coordinates = [];
-
   var recurse = function(round) {
     //terminating condition:
     if (round === n) {
@@ -136,14 +122,12 @@ window.countNQueensSolutions = function(n) {
       
       for (var col = 0; col < n; col++) {
         board.togglePiece(round, col);
-        coordinates.push([round, col]);
 
         if (!board.hasAnyColConflicts() && !board.hasAnyMajorDiagonalConflicts() && !board.hasAnyMinorDiagonalConflicts()) {
           recurse(round + 1);
         }
         
-        let rewind = coordinates.pop();
-        board.togglePiece(rewind[0], rewind[1]);
+        board.togglePiece(round, col);
       }
     }
   };
