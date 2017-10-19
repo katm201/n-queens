@@ -55,29 +55,23 @@ window.countNRooksSolutions = function(n) {
   var coordinates = [];
 
   var recurse = function(round) {
-    debugger;
     //terminating condition:
     if (round === n) {
       solutionCount++;
-      let rewind = coordinates.pop();
-      board.togglePiece(rewind[0], rewind[1]);
-    } else {
+      return;
 
-      round++;
+    } else {
       
       for (var col = 0; col < n; col++) {
-        board.togglePiece(round - 1, col);
-        coordinates.push([round - 1, col]);
+        board.togglePiece(round, col);
+        coordinates.push([round, col]);
 
         if (!board.hasAnyRooksConflicts()) {
-          recurse(round);
-          round--;
+          recurse(round + 1);
         }
         
-        if (coordinates.length > 0) {
-          let rewind = coordinates.pop();
-          board.togglePiece(rewind[0], rewind[1]);
-        }
+        let rewind = coordinates.pop();
+        board.togglePiece(rewind[0], rewind[1]);
       }
     }
   };
