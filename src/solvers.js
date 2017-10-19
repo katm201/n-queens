@@ -31,7 +31,7 @@ window.findNRooksSolution = function(n) {
         board.togglePiece(round, col);
         coordinates.push([round, col]);
 
-        if (!board.hasAnyRooksConflicts()) {
+        if (!board.hasAnyColConflicts()) {
           return recurse(round + 1);
         }
         
@@ -67,7 +67,7 @@ window.countNRooksSolutions = function(n) {
         board.togglePiece(round, col);
         coordinates.push([round, col]);
 
-        if (!board.hasAnyRooksConflicts()) {
+        if (!board.hasAnyColConflicts()) {
           recurse(round + 1);
         }
         
