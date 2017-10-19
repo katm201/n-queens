@@ -17,29 +17,31 @@
 
 window.findNRooksSolution = function(n) {
    
-  var recurse = function(board, round) {
-    board = board || new Board({n: n});
-    round = round || 0;
+  var board = new Board({n: n});
 
-    //terminal condition
+  var coordinates = [];
+
+  var recurse = function(round) {
+    //terminating condition:
     if (round === n) {
       return board.rows();
-    }
+    } else {
+      
+      for (var col = 0; col < n; col++) {
+        board.togglePiece(round, col);
+        coordinates.push([round, col]);
 
-    //recursive condition
-    for (var i = round; i < n; i++) {
-      round++;
-      for (var j = 0; j < n; j++) {
-        board.togglePiece(i, j);
         if (!board.hasAnyRooksConflicts()) {
-          return recurse(board, round);
+          return recurse(round + 1);
         }
-        board.togglePiece(i, j);
+        
+        let rewind = coordinates.pop();
+        board.togglePiece(rewind[0], rewind[1]);
       }
     }
   };
 
-  var solution = recurse();
+  var solution = recurse(0);
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
 
@@ -59,7 +61,6 @@ window.countNRooksSolutions = function(n) {
     if (round === n) {
       solutionCount++;
       return;
-
     } else {
       
       for (var col = 0; col < n; col++) {
