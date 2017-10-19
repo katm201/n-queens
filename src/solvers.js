@@ -56,13 +56,14 @@ window.countNRooksSolutions = function(n) {
 
   var coordinates = [];
 
+  var setColumns = [];
+
   var recurse = function(round) {
     //terminating condition:
     if (round === n) {
       solutionCount++;
       return;
     } else {
-      
       for (var col = 0; col < n; col++) {
         board.togglePiece(round, col);
         coordinates.push([round, col]);
