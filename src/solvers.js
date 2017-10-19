@@ -50,33 +50,34 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   var solutionCount = 0;
 
-  var recurse = function(board, round) {
-    board = board || new Board({n: n});
-    round = round || 0;
+  var board = new Board({n: n});
+
+  var recurse = function(round) {
 
     //terminal condition
     if (round === n) {
       solutionCount++;
-    }
-
-    debugger;
-    //recursive condition
-    for (var i = round; i < n; i++) {
-      round++;
-      for (var j = 0; j < n; j++) {
-        board.togglePiece(i, j);
-        
-        if (!board.hasAnyRooksConflicts()) {
-          recurse(board, round);
-        }
-
-        board.togglePiece(i, j);
-      }
       
+
+    } else {
+    //recursive condition
+      for (var col = 0; col < n; col++) {
+        
+        board.togglePiece(round, col);
+        round++;
+
+        if (!board.hasAnyRooksConflicts()) {
+          recurse(round);
+        } else {
+
+          round--;
+          board.togglePiece(round, col);
+        }
+      }
     }
   };
 
-  recurse();
+  recurse(0);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
